@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Hỗ Trợ Ra Quyết Định Lựa Chọn Điện Thoại</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="history-overlay" class="overlay" onclick="toggleHistory()"></div>
+
+    <div id="history-sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử của bạn</h2>
+            <button class="close-btn" onclick="toggleHistory()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="history-container" class="sidebar-content">
+            </div>
+    </div>
+
+    <div class="container">
+        <header class="page-header">
+            <h1 class="gradient-text">Hệ Hỗ Trợ Ra Quyết Định (AHP + AI)</h1>
+            <p>Hệ thống tự động phân tích ngữ nghĩa, lập ma trận so sánh và xếp hạng thông minh.</p>
+            
+            <button class="history-btn" onclick="toggleHistory()">
+                <i class="fa-solid fa-clock-rotate-left"></i> Xem lịch sử
+            </button>
+        </header>
+
+        <section class="card input-card" id="main-input-section">
+            <div class="card-title">
+                <div class="icon-circle bg-gradient-ai"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <div>
+                    <h2>Mô tả nhu cầu của bạn</h2>
+                    <p class="subtitle">AI sẽ phân tích và gợi ý trọng số tiêu chí phù hợp</p>
+                </div>
+            </div>
+            <div class="input-wrapper">
+                <textarea id="userInput" placeholder="Ví dụ: Tôi cần điện thoại pin trâu, chụp ảnh đẹp..."></textarea>
+                <button class="send-btn" onclick="analyzeDemand()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+            <div class="suggestions">
+                <span><i class="fa-regular fa-lightbulb"></i> Gợi ý:</span>
+                <button class="chip" onclick="fillSuggestion(this)">Điện thoại chiến game, cấu hình cao</button>
+                <button class="chip" onclick="fillSuggestion(this)">Camera sắc nét, chụp ảnh sống ảo</button>
+            </div>
+        </section>
+
+        <div id="loading-spinner" style="display: none; text-align: center; padding: 50px 0;">
+            <div class="spinner"></div>
+            <p style="color: #6b7280; font-weight: 500; margin-top: 15px;">Hệ thống AI đang tính toán...</p>
+        </div>
+
+        <section class="card step-card" id="candidates-section" style="display: none;">
+            <div class="card-title">
+                <div class="icon-circle bg-gradient-blue"><i class="fa-solid fa-list-ul"></i></div>
+                <div>
+                    <h2>Bước 1: Sàng lọc 10 phương án</h2>
+                    <p class="subtitle">10 mẫu smartphone tiềm năng nhất từ Database</p>
+                </div>
+            </div>
+            <div id="candidates-container" class="grid-container"></div>
+        </section>
+
+        <section class="card step-card" id="matrix-section" style="display: none;">
+            <div class="card-title">
+                <div class="icon-circle bg-gradient-purple"><i class="fa-solid fa-table-cells"></i></div>
+                <div>
+                    <h2>Bước 2: Ma trận so sánh cặp (AI thiết lập)</h2>
+                    <p class="subtitle">Đánh giá mức độ quan trọng giữa các tiêu chí</p>
+                </div>
+            </div>
+            <div id="matrix-explanation"></div>
+            <div class="table-responsive">
+                <table class="ahp-table" id="matrix-table"></table>
+            </div>
+        </section>
+
+        <section class="card step-card" id="ranking-section" style="display: none;">
+            <div class="card-title">
+                <div class="icon-circle bg-gradient-orange"><i class="fa-solid fa-trophy"></i></div>
+                <div>
+                    <h2>Bước 3: Kết quả xếp hạng Top 5 (AHP)</h2>
+                    <p class="subtitle">Lựa chọn tối ưu nhất dành riêng cho bạn</p>
+                </div>
+            </div>
+            <div id="ranking-container"></div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

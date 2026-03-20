@@ -1,0 +1,14 @@
+# Bỏ qua môi trường ảo
+venv/
+env/
+
+# Bỏ qua bộ nhớ đệm của Python
+__pycache__/
+*.pyc
+
+# Bỏ qua thư mục AI Model (Vì nó quá nặng để đưa lên GitHub)
+phobert-ahp-final/
+
+# Bỏ qua file database ẩn (nếu có)
+*.sqlite3
+.env
