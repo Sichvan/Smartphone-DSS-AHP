@@ -111,6 +111,7 @@ class AHP:
         df = self.df.copy()
         if len(df) == 0: return []
 
+        # Chuẩn hóa dữ liệu (Giữ nguyên logic của bạn)
         for col in ['RAM_val', 'Battery_val', 'Screen_val', 'Front_MP', 'Back_MP', 'Proc_score']:
             max_val, min_val = df[col].max(), df[col].min()
             df[f'Norm_{col}'] = (df[col] - min_val) / (max_val - min_val) if max_val > min_val else 0.5
@@ -119,11 +120,13 @@ class AHP:
             max_val, min_val = df[col].max(), df[col].min()
             df[f'Norm_{col}'] = (max_val - df[col]) / (max_val - min_val) if max_val > min_val else 0.5
 
+        # Tính toán điểm theo từng tiêu chí
         df['Score_Gia'] = df['Norm_Price_USD']
         df['Score_HieuNang'] = (df['Norm_RAM_val'] * 0.5) + (df['Norm_Proc_score'] * 0.5)
         df['Score_TraiNghiem'] = (df['Norm_Battery_val'] * 0.4) + (df['Norm_Screen_val'] * 0.3) + (df['Norm_Weight_val'] * 0.3)
         df['Score_Camera'] = (df['Norm_Back_MP'] * 0.7) + (df['Norm_Front_MP'] * 0.3)
 
+        # Tính tổng điểm dựa trên trọng số từ AI
         df['Total_score'] = (
             df['Score_Gia'] * ai_weights['Giá'] +
             df['Score_HieuNang'] * ai_weights['Hiệu năng'] +
@@ -131,15 +134,8 @@ class AHP:
             df['Score_Camera'] * ai_weights['Camera']
         )
 
-        top_phones = df.sort_values(by='Total_score', ascending=False).head(10)
+        # Lấy top 5 máy tiềm năng nhất
+        top_phones = df.sort_values(by='Total_score', ascending=False).head(5)
         
-        result = []
-        for _, row in top_phones.iterrows():
-            result.append({
-                'Model Name': row['Model Name'],
-                'Total_score': round(row['Total_score'], 4),
-                'Price': row['Price_USD'],
-                'Battery': row['Battery_val'],
-                'Camera': f"{row['Back_MP']}MP / {row['Front_MP']}MP"
-            })
-        return result
+        # TRẢ VỀ TOÀN BỘ DỮ LIỆU (Chuyển DataFrame hàng thành Dictionary)
+        return top_phones.to_dict(orient='records')

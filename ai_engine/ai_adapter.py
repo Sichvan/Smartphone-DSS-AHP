@@ -11,7 +11,6 @@ class AIAdapter:
         self.model = AutoModelForSequenceClassification.from_pretrained(self.model_path)
         self.model.eval()
 
-# ... (Giữ nguyên các phần code bên dưới của bạn)
 
     def get_weights(self, user_text: str) -> dict:
         inputs = self.tokenizer(user_text, return_tensors="pt", truncation=True, padding=True, max_length=256)

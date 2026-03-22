@@ -10,4 +10,6 @@ pip install -r requirements.txt
 Chạy chương trình
 python backend/app.py
 
-* Chưa kết nối PostgreSQL, đang sử dụng mobiles.csv 
+*
+Bỏ file phobert-ahp-final của NA vào ai_engine
+Ở dòng 5 của file database sửa lại mật khẩu postgres của mn

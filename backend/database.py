@@ -62,3 +62,17 @@ def get_user_history():
     except Exception as e:
         print(f"[-] Lỗi lấy lịch sử: {e}")
         return []
+    
+def clear_user_history():
+    """Xóa toàn bộ lịch sử trong CSDL"""
+    try:
+        conn = psycopg2.connect(DB_CONN)
+        cur = conn.cursor()
+        cur.execute("DELETE FROM user_history")
+        conn.commit()
+        cur.close()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"[-] Lỗi xóa lịch sử: {e}")
+        return False
